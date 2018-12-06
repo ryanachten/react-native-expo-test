@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import {
   Image,
   TextInput,
@@ -9,15 +10,31 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { emailChanged } from '../actions';
 
-export default class LoginScreen extends React.Component {
+class LoginScreen extends React.Component {
+
+  handleEmailChanged(text) {
+    this.props.emailChanged(text);
+  }
 
   render() {
+    const { email } = this.props;
     return (
       <View>
         <Text>Login Screen yo!</Text>
-        <TextInput style={styles.input} placeholderTextColor='rgb(64, 64, 64)' placeholder='email@test.com' />
-        <TextInput style={styles.input} placeholderTextColor='rgb(64, 64, 64)' placeholder='password' />
+        <TextInput
+            style={styles.input}
+            placeholderTextColor='rgb(64, 64, 64)'
+            placeholder='email@test.com'
+            onChangeText={this.handleEmailChanged.bind(this)}
+            // value={email}
+          />
+        <TextInput
+          style={styles.input}
+          placeholderTextColor='rgb(64, 64, 64)'
+          placeholder='password'
+        />
         <TouchableOpacity style={styles.button}>
           <Text>Here's a button yo</Text>
         </TouchableOpacity>
@@ -25,6 +42,17 @@ export default class LoginScreen extends React.Component {
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  const { email } = state.auth;
+  return (
+    {
+      email
+    }
+  );
+}
+
+export default connect(mapStateToProps, { emailChanged })(LoginScreen);
 
 const styles = StyleSheet.create({
   input: {

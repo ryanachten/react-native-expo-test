@@ -1,5 +1,7 @@
+import { EMAIL_CHANGED } from '../actions/types';
+
 const INITIAL_STATE = {
-  email: '',
+  email: 'reducer yoooo',
   password: '',
   user: null,
   error: '',
@@ -8,9 +10,11 @@ const INITIAL_STATE = {
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    // case expression:
-    //
-    //   break;
+    case EMAIL_CHANGED:
+      return {
+        ...state,
+        email: action.payload
+      };
     default:
       return state;
   }
