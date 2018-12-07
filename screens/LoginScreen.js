@@ -15,6 +15,10 @@ import { emailChanged } from '../actions';
 
 class LoginScreen extends React.Component {
 
+  static navigationOptions = {
+    title: 'Log In',
+  };
+
   handleEmailChanged(text) {
     this.props.emailChanged(text);
   }
