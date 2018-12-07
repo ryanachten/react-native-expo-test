@@ -1,7 +1,7 @@
 import { EMAIL_CHANGED } from '../actions/types';
 
 const INITIAL_STATE = {
-  email: 'reducer yoooo',
+  email: '',
   password: '',
   user: null,
   error: '',

@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Button, Card, FormLabel, FormInput } from 'react-native-elements'
 import {
   Image,
   TextInput,
@@ -21,24 +22,19 @@ class LoginScreen extends React.Component {
   render() {
     const { email } = this.props;
     return (
-      <View>
-        <Text>Login Screen yo!</Text>
-        <TextInput
-            style={styles.input}
-            placeholderTextColor='rgb(64, 64, 64)'
+      <Card>
+        <FormLabel>Email</FormLabel>
+        <FormInput
             placeholder='email@test.com'
             onChangeText={this.handleEmailChanged.bind(this)}
-            // value={email}
+            value={email}
           />
-        <TextInput
-          style={styles.input}
-          placeholderTextColor='rgb(64, 64, 64)'
+        <FormLabel>Password</FormLabel>
+        <FormInput
           placeholder='password'
         />
-        <TouchableOpacity style={styles.button}>
-          <Text>Here's a button yo</Text>
-        </TouchableOpacity>
-      </View>
+        <Button title='Submit' />
+      </Card>
     );
   }
 }
@@ -53,19 +49,3 @@ const mapStateToProps = (state) => {
 }
 
 export default connect(mapStateToProps, { emailChanged })(LoginScreen);
-
-const styles = StyleSheet.create({
-  input: {
-    backgroundColor: 'rgb(200, 200, 200)',
-    padding: 20,
-    margin: 20
-  },
-  button: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'rgb(200, 200, 200)',
-    padding: 20,
-    flex: 1,
-    margin: 20
-  }
-});
