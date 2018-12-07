@@ -1,18 +1,30 @@
 import React from 'react';
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { AppLoading, Asset, Font, Icon } from 'expo';
-import { createStore } from 'redux';
 import { Provider } from 'react-redux';
+import firebase from 'firebase';
+import store from './configureStore';
 import AppNavigator from './navigation/AppNavigator';
-import reducers from './reducers';
 
 export default class App extends React.Component {
   state = {
     isLoadingComplete: false,
   };
 
+  componentWillMount(){
+    const config = {
+        apiKey: 'AIzaSyDGBmN8fRymZYA_dkAFSsR12W9lzjc40tg',
+        authDomain: 'manager-98439.firebaseapp.com',
+        databaseURL: 'https://manager-98439.firebaseio.com',
+        projectId: 'manager-98439',
+        storageBucket: 'manager-98439.appspot.com',
+        messagingSenderId: '179190179577'
+    };
+    firebase.initializeApp(config);
+  }
+
   render() {
-    const store = createStore(reducers);
+
     if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {
       return (
         <AppLoading

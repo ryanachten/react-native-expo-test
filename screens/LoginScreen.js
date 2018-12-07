@@ -11,7 +11,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { emailChanged, passwordChanged } from '../actions';
+import { emailChanged, passwordChanged, loginUser } from '../actions';
 
 class LoginScreen extends React.Component {
 
@@ -27,23 +27,33 @@ class LoginScreen extends React.Component {
     this.props.passwordChanged(text);
   }
 
+  handleSubmit() {
+    const { email, password } = this.props;
+    this.props.loginUser({ email, password });
+  }
+
   render() {
     const { email, password } = this.props;
     return (
       <Card>
         <FormLabel>Email</FormLabel>
         <FormInput
+            autoCapitalize='none'
             placeholder='email@test.com'
             onChangeText={this.handleEmailChanged.bind(this)}
             value={email}
           />
         <FormLabel>Password</FormLabel>
         <FormInput
-          placeholder='password'
+          autoCapitalize='none'
           onChangeText={this.handlePasswordChanged.bind(this)}
+          placeholder='password'
+          secureTextEntry
           value={password}
         />
-        <Button title='Submit' />
+        <Button title='Submit'
+          onPress={this.handleSubmit.bind(this)}
+        />
       </Card>
     );
   }
@@ -58,7 +68,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   emailChanged,
-  passwordChanged
+  passwordChanged,
+  loginUser
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginScreen);
