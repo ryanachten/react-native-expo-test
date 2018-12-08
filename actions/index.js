@@ -1,4 +1,7 @@
 import firebase from 'firebase';
+import { NavigationActions } from 'react-navigation'
+import NavigationService from '../navigation/NavigationService';
+
 import {
   EMAIL_CHANGED, PASSWORD_CHANGED,
   LOGIN_SUCCESS, LOGIN_FAIL
@@ -17,7 +20,7 @@ export const passwordChanged = (text) => ({
 export const loginUser = ({email, password}) => {
   return (dispatch) => {
     firebase.auth().signInWithEmailAndPassword(email, password)
-      .then( user => successfulLogin(email, password))
+      .then( user => successfulLogin(dispatch, user))
       .catch( error => createUser(dispatch, email, password));
   }
 };
@@ -33,6 +36,8 @@ const successfulLogin = (dispatch, user) => {
     type: LOGIN_SUCCESS,
     payload: user
   });
+  
+  NavigationService.navigate('Home');
 };
 
 const failedLogin = (dispatch, error) => {

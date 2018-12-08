@@ -2,9 +2,13 @@ import React from 'react';
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { AppLoading, Asset, Font, Icon } from 'expo';
 import { Provider } from 'react-redux';
+import { createNavigationContainer } from 'react-navigation';
 import firebase from 'firebase';
 import store from './configureStore';
 import AppNavigator from './navigation/AppNavigator';
+import NavigationService from './navigation/NavigationService';
+
+const AppContainer = createNavigationContainer(AppNavigator);
 
 export default class App extends React.Component {
   state = {
@@ -38,7 +42,11 @@ export default class App extends React.Component {
         <Provider store={store}>
           <View style={styles.container}>
             {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-            <AppNavigator />
+            <AppContainer
+              ref={navigatorRef => {
+                NavigationService.setTopLevelNavigator(navigatorRef);
+              }}
+            />
           </View>
         </Provider>
       );
