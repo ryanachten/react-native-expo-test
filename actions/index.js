@@ -1,5 +1,5 @@
 import firebase from 'firebase';
-import { NavigationActions } from 'react-navigation'
+import { NavigationActions } from 'react-navigation';
 import NavigationService from '../navigation/NavigationService';
 
 import {
@@ -36,8 +36,8 @@ const successfulLogin = (dispatch, user) => {
     type: LOGIN_SUCCESS,
     payload: user
   });
-  
-  NavigationService.navigate('Home');
+
+  NavigationService.navigate('Employees');
 };
 
 const failedLogin = (dispatch, error) => {

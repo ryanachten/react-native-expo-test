@@ -4,6 +4,8 @@ import { createStackNavigator, createBottomTabNavigator } from 'react-navigation
 
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
+import EmployeeListScreen from '../screens/EmployeeListScreen';
+import EmployeeCreateScreen from '../screens/EmployeeCreateScreen';
 import LinksScreen from '../screens/LinksScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 
@@ -53,7 +55,23 @@ SettingsStack.navigationOptions = {
   ),
 };
 
+const EmployeeListStack = createStackNavigator({
+  Employees: EmployeeListScreen,
+  CreateEmployee: EmployeeCreateScreen
+});
+
+EmployeeListStack.navigationOptions = {
+  tabBarLabel: 'Employees',
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon
+      focused={focused}
+      name={Platform.OS === 'ios' ? 'ios-options' : 'md-options'}
+    />
+  ),
+};
+
 export default createBottomTabNavigator({
+  EmployeeListStack,
   HomeStack,
   LinksStack,
   SettingsStack,
