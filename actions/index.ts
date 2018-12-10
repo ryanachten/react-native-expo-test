@@ -4,37 +4,37 @@ import NavigationService from '../navigation/NavigationService';
 
 import {
   EMAIL_CHANGED, PASSWORD_CHANGED,
-  LOGIN_SUCCESS, LOGIN_FAIL
+  LOGIN_SUCCESS, LOGIN_FAIL,
 } from './types';
 
-export const emailChanged = (text) => ({
+export const emailChanged = text => ({
   type: EMAIL_CHANGED,
-  payload: text
+  payload: text,
 });
 
-export const passwordChanged = (text) => ({
+export const passwordChanged = text => ({
   type: PASSWORD_CHANGED,
-  payload: text
+  payload: text,
 });
 
-export const loginUser = ({email, password}) => {
+export const loginUser = ({ email, password }) => {
   return (dispatch) => {
     firebase.auth().signInWithEmailAndPassword(email, password)
-      .then( user => successfulLogin(dispatch, user))
-      .catch( error => createUser(dispatch, email, password));
-  }
+      .then(user => successfulLogin(dispatch, user))
+      .catch(error => createUser(dispatch, email, password));
+  };
 };
 
 const createUser = (dispatch, email, password) => {
   firebase.auth().createUserWithEmailAndPassword(email, password)
-    .then( user => successfulLogin(dispatch, user))
-    .catch( error => failedLogin(dispatch, error));
-}
+    .then(user => successfulLogin(dispatch, user))
+    .catch(error => failedLogin(dispatch, error));
+};
 
 const successfulLogin = (dispatch, user) => {
   dispatch({
     type: LOGIN_SUCCESS,
-    payload: user
+    payload: user,
   });
 
   NavigationService.navigate('Employees');
@@ -43,6 +43,6 @@ const successfulLogin = (dispatch, user) => {
 const failedLogin = (dispatch, error) => {
   dispatch({
     type: LOGIN_FAIL,
-    payload: error
+    payload: error,
   });
 };
