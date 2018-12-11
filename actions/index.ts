@@ -7,12 +7,12 @@ import {
   LOGIN_SUCCESS, LOGIN_FAIL,
 } from './types';
 
-export const emailChanged = text => ({
+export const emailChanged = (text: string) => ({
   type: EMAIL_CHANGED,
   payload: text,
 });
 
-export const passwordChanged = text => ({
+export const passwordChanged = (text: string) => ({
   type: PASSWORD_CHANGED,
   payload: text,
 });
