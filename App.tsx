@@ -1,33 +1,33 @@
-import React from 'react';
+import * as React from 'react';
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { AppLoading, Asset, Font, Icon } from 'expo';
 import { Provider } from 'react-redux';
 import { createNavigationContainer } from 'react-navigation';
 import firebase from 'firebase';
-import store from './configureStore';
+import configureStore from './configureStore';
 import AppNavigator from './navigation/AppNavigator';
 import NavigationService from './navigation/NavigationService';
 
 const AppContainer = createNavigationContainer(AppNavigator);
 
 export default class App extends React.Component {
-  state = {
+  private state = {
     isLoadingComplete: false,
   };
 
-  componentWillMount(){
+  private componentWillMount() {
     const config = {
-        apiKey: 'AIzaSyDGBmN8fRymZYA_dkAFSsR12W9lzjc40tg',
-        authDomain: 'manager-98439.firebaseapp.com',
-        databaseURL: 'https://manager-98439.firebaseio.com',
-        projectId: 'manager-98439',
-        storageBucket: 'manager-98439.appspot.com',
-        messagingSenderId: '179190179577'
+      apiKey: 'AIzaSyDGBmN8fRymZYA_dkAFSsR12W9lzjc40tg',
+      authDomain: 'manager-98439.firebaseapp.com',
+      databaseURL: 'https://manager-98439.firebaseio.com',
+      projectId: 'manager-98439',
+      storageBucket: 'manager-98439.appspot.com',
+      messagingSenderId: '179190179577',
     };
     firebase.initializeApp(config);
   }
 
-  render() {
+  private render() {
 
     if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {
       return (
@@ -37,23 +37,22 @@ export default class App extends React.Component {
           onFinish={this._handleFinishLoading}
         />
       );
-    } else {
-      return (
-        <Provider store={store}>
-          <View style={styles.container}>
-            {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-            <AppContainer
-              ref={navigatorRef => {
-                NavigationService.setTopLevelNavigator(navigatorRef);
-              }}
-            />
-          </View>
-        </Provider>
-      );
     }
+    return (
+      <Provider store={configureStore}>
+        <View style={styles.container}>
+          {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+          <AppContainer
+            ref={(navigatorRef) => {
+              NavigationService.setTopLevelNavigator(navigatorRef);
+            }}
+          />
+        </View>
+      </Provider>
+    );
   }
 
-  _loadResourcesAsync = async () => {
+  private _loadResourcesAsync = async () => {
     return Promise.all([
       Asset.loadAsync([
         require('./assets/images/robot-dev.png'),
@@ -67,17 +66,17 @@ export default class App extends React.Component {
         'space-mono': require('./assets/fonts/SpaceMono-Regular.ttf'),
       }),
     ]);
-  };
+  }
 
-  _handleLoadingError = error => {
+  private _handleLoadingError = (error) => {
     // In this case, you might want to report the error to your error
     // reporting service, for example Sentry
-    console.warn(error);
-  };
+    // console.warn(error);
+  }
 
-  _handleFinishLoading = () => {
+  private _handleFinishLoading = () => {
     this.setState({ isLoadingComplete: true });
-  };
+  }
 }
 
 const styles = StyleSheet.create({
